@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'webapp.urls'
 
 TEMPLATES = [
-    {
+     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -65,8 +66,17 @@ TEMPLATES = [
             ],
         },
     },
-]
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'OPTIONS': {
+            'environment': 'webapp.jinja2_environment.environment',
+        },
+    },
 
+  
+]
 WSGI_APPLICATION = 'webapp.wsgi.application'
 
 
@@ -74,10 +84,14 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'data',
+       'USER': 'postgres',
+       'PASSWORD': '1',
+       'HOST': 'localhost',
+       'PORT': '5432',
+   }
 }
 
 
